@@ -29,4 +29,4 @@ dga_df["is_dga"] = 1
 # combine legitimate and dga domains & shuffle
 combined_data = pd.concat([legitimate_train_data_part, dga_df], ignore_index=True)
 combined_data = combined_data.sample(frac=1).reset_index(drop=True)
-combined_data.to_csv("train.csv", index=False)
+combined_data.to_csv("dataset.csv", index=False)
