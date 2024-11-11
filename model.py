@@ -17,7 +17,7 @@ max_features = len(chars) + 1
 
 x_train, x_test, y_train, y_test = train_test_split(x_padded, y, test_size=0.2)
 
-# prediction model
+# model training
 model = keras.Sequential()
 model.add(Embedding(max_features, 128, input_length=max_length))
 model.add(LSTM(128))
@@ -26,11 +26,11 @@ model.add(Dense(1))
 model.add(Activation('sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='rmsprop')
 
-model.fit(x_train, y_train, batch_size=16, epochs=5)
-
-y_prediction = model.predict(x_test)
+for i in range(3):
+    model.fit(x_train, y_train, batch_size=16, epochs=5)
 
 # characteristics calculating
+y_prediction = model.predict(x_test)
 cm = confusion_matrix(y_test, y_prediction > 0.5)
 percent_cm = cm * 100 / len(x_test)
 cm = cm.ravel()
