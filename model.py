@@ -25,7 +25,6 @@ model.add(Dense(1))
 model.add(Activation('sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='rmsprop')
 
-# for _ in range(5):
 model.fit(x_train, y_train, batch_size=16, epochs=1)
 
 y_prediction = model.predict(x_test)
@@ -33,12 +32,13 @@ y_prediction = model.predict(x_test)
 cm = confusion_matrix(y_test, y_prediction > 0.5)
 percent_cm = cm * 100 / len(x_test)
 
-labels = ['legit', 'dga']
+labels = ['legitimate', 'dga']
 
 for i, label_i in enumerate(labels):
     for j, label_j in enumerate(labels):
         print("%s/%s: %.2f%% (%d/%d)" % (label_i, label_j, (percent_cm[i][j]), cm[i][j], cm[i].sum()))
 
+print('AUC: ', roc_auc_score(y_test, y_prediction))
 
 fig = plt.figure()
 ax = fig.add_subplot(111)
@@ -53,5 +53,3 @@ ax.set_yticklabels(labels)
 plt.xlabel('Predicted')
 plt.ylabel('True')
 plt.show()
-
-print('AUC: ', roc_auc_score(y_test, y_prediction))
