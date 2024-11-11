@@ -26,7 +26,7 @@ model.add(Dense(1))
 model.add(Activation('sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='rmsprop')
 
-model.fit(x_train, y_train, batch_size=16, epochs=1)
+model.fit(x_train, y_train, batch_size=16, epochs=5)
 
 y_prediction = model.predict(x_test)
 
@@ -35,7 +35,7 @@ cm = confusion_matrix(y_test, y_prediction > 0.5)
 percent_cm = cm * 100 / len(x_test)
 cm = cm.ravel()
 
-tp, tn, fp, fn = cm
+tn, fp, fn, tp = cm
 accuracy = (tp + tn) / (sum(cm))
 precision = tp / (tp + fp)
 recall = tp / (tp + fn)
