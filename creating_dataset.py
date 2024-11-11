@@ -9,10 +9,9 @@ legitimate_domain_data.to_csv("legitimate_domain_data/legitimate_domain.csv", in
 
 # delete duplicates in train
 val_data = pd.read_csv("validation/validation.csv")
-test_data = pd.read_csv("test.csv")
 unfiltered_legitimate_train_data = pd.read_csv("legitimate_domain_data/legitimate_domain.csv")
 
-exclude_data = set(val_data.iloc[:, 0]).union(set(test_data.iloc[:, 0]))
+exclude_data = set(val_data.iloc[:, 0])
 legitimate_train_data = unfiltered_legitimate_train_data[
     ~unfiltered_legitimate_train_data.iloc[:, 0].isin(exclude_data)]
 legitimate_train_data.to_csv("legitimate_domain_data/legitimate_domain.csv", index=False)
