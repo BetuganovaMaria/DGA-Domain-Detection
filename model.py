@@ -17,6 +17,7 @@ max_features = len(chars) + 1
 
 x_train, x_test, y_train, y_test = train_test_split(x_padded, y, test_size=0.2)
 
+# prediction model
 model = keras.Sequential()
 model.add(Embedding(max_features, 128, input_length=max_length))
 model.add(LSTM(128))
@@ -29,17 +30,27 @@ model.fit(x_train, y_train, batch_size=16, epochs=1)
 
 y_prediction = model.predict(x_test)
 
+# characteristics calculating
 cm = confusion_matrix(y_test, y_prediction > 0.5)
 percent_cm = cm * 100 / len(x_test)
+cm = cm.ravel()
 
-labels = ['legitimate', 'dga']
+tp, tn, fp, fn = cm
+accuracy = (tp + tn) / (sum(cm))
+precision = tp / (tp + fp)
+recall = tp / (tp + fn)
 
-for i, label_i in enumerate(labels):
-    for j, label_j in enumerate(labels):
-        print("%s/%s: %.2f%% (%d/%d)" % (label_i, label_j, (percent_cm[i][j]), cm[i][j], cm[i].sum()))
+cm_labels = ['True positive', 'True negative', 'False positive', 'False negative']
+for i in range(len(cm_labels)):
+    print(f'{cm_labels[i]}: {cm[i]}')
 
-print('AUC: ', roc_auc_score(y_test, y_prediction))
+print(f'Accuracy: {accuracy}')
+print(f'Precision: {precision}')
+print(f'Recall: {recall}')
+print(f'F1: {2 * (precision * recall) / (precision + recall)}')
+print(f'AUC: {roc_auc_score(y_test, y_prediction)}')
 
+# graph
 fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.grid(visible=False)
@@ -48,8 +59,8 @@ plt.title('Confusion matrix')
 fig.colorbar(cax)
 ax.set_xticks([0, 1])
 ax.set_yticks([0, 1])
-ax.set_xticklabels(labels)
-ax.set_yticklabels(labels)
+ax.set_xticklabels(['legitimate', 'dga'])
+ax.set_yticklabels(['legitimate', 'dga'])
 plt.xlabel('Predicted')
 plt.ylabel('True')
 plt.show()
