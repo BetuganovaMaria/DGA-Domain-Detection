@@ -8,7 +8,7 @@ legitimate_domain_data = majestic_million_data.iloc[:, [2]]
 legitimate_domain_data.to_csv("legitimate_domain_data/legitimate_domain.csv", index=False)
 
 # delete duplicates in train
-val_data = pd.read_csv("val.csv")
+val_data = pd.read_csv("validation/validation.csv")
 test_data = pd.read_csv("test.csv")
 unfiltered_legitimate_train_data = pd.read_csv("legitimate_domain_data/legitimate_domain.csv")
 

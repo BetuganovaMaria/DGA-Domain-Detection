@@ -1,0 +1,9 @@
+True positive: 4507
+True negative: 475
+False positive: 658
+False negative: 4360
+Accuracy: 0.8867
+Precision: 0.9017580144777663
+Recall: 0.8688720605819051
+F1: 0.8850096417334822
+AUC: 0.9522568412486625
