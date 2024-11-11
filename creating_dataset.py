@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 from dga import *
 
@@ -22,7 +23,10 @@ legitimate_train_data_part.columns = ["domain"]
 legitimate_train_data_part["is_dga"] = 0
 
 # add dga domains & set is_dga
-dga_domains = generate_dga_domains(10000, 5, 20)
+max_length = np.max([len(i) for i in legitimate_train_data_part['domain']])
+min_length = np.min([len(i) for i in legitimate_train_data_part['domain']])
+
+dga_domains = generate_dga_domains(10000, min_length, max_length)
 dga_df = pd.DataFrame(dga_domains, columns=['domain'])
 dga_df["is_dga"] = 1
 
