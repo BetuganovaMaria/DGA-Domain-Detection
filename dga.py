@@ -21,7 +21,7 @@ def generate_dga_domains(count, min_length, max_length):
         '.store', '.cloud', '.fun', '.top', '.guru', '.life', '.news', '.live',
         '.media', '.agency', '.pro', '.world', '.edu'
     ]
-    allowed_chars = string.ascii_lowercase + "-"
+    allowed_chars = string.ascii_lowercase + string.digits + "-"
 
     seed = int(datetime.now().strftime('%Y%m%d'))
     random.seed(seed)
